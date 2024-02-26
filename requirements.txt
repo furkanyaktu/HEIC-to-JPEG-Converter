@@ -1,2 +1,2 @@
 pillow
-pyheif
+pillow_heif
