@@ -1,18 +1,13 @@
 import os
 from PIL import Image
-from pyheif import read
+from pillow_heif import register_heif_opener
+
+register_heif_opener()
 
 def heic_to_jpeg(heic_file_path, jpeg_file_path):
-    heif_file = read(heic_file_path)
-    image = Image.frombytes(
-        heif_file.mode,
-        heif_file.size,
-        heif_file.data,
-        "raw",
-        heif_file.mode,
-        heif_file.stride,
-    )
-    image.save(jpeg_file_path, "JPEG")
+    with open(heic_file_path, 'rb') as f:
+        heif_file = Image.open(f)
+        heif_file.save(jpeg_file_path, "JPEG")
 
 def convert_heic_to_jpeg_in_current_directory():
     current_directory = os.getcwd()  
